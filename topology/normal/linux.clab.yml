@@ -1,0 +1,20 @@
+name: demo
+
+mgmt:
+  network: fixedips
+  ipv4_subnet: 172.100.100.0/24
+  ipv6_subnet: 2001:172:100:100::/80
+
+topology:
+  nodes:
+    n1:
+      kind: linux
+      image: alpine:latest
+      mgmt_ipv4: 172.100.100.11
+    n2:
+      kind: linux
+      image: alpine:latest
+      mgmt_ipv4: 172.100.100.12
+
+  links:
+    - endpoints: ["n1:eth1","n2:eth1"]

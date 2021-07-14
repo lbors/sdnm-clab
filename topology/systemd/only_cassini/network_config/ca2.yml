@@ -1,0 +1,36 @@
+interfaces:
+- name: oe1
+  type: ovs-bridge
+  state: up
+  bridge:
+    options:
+      stp: true
+    port:
+    - name: ca1-ovif1
+
+- name: xe1
+  type: ovs-bridge
+  state: up
+  bridge:
+    options:
+      stp: true
+    port:
+    - name: ca1-vif1
+
+- name: xe1
+  type: ovs-bridge
+  state: down
+  bridge: {}
+  lldp:
+    enabled: false
+  ovs-db:
+    external_ids: {}
+- name: xe1/1
+  type: ovs-interface
+  state: down
+  ipv4: {}
+  ipv6: {}
+  lldp:
+    enabled: false
+  ovs-db:
+    external_ids: {}

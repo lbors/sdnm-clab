@@ -1,0 +1,18 @@
+interfaces:
+- name: oe1
+  type: ovs-bridge
+  state: up
+  bridge:
+    options:
+      stp: true
+    port:
+    - name: ca2-ovif1
+
+- name: xe1
+  type: ovs-bridge
+  state: up
+  bridge:
+    options:
+      stp: true
+    port:
+    - name: ca2-vif1

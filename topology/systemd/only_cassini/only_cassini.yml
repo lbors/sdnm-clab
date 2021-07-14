@@ -1,0 +1,59 @@
+name: teste
+
+mgmt:
+  network: exp
+  ipv4_subnet: 172.10.10.0/24
+
+topology:
+  nodes:
+    onos:
+      kind: linux
+      image: onos-rnp-demo:latest
+      mgmt_ipv4: 172.10.10.2
+      env:
+        ONOS_APPS: gui2,drivers.bmv2,pipelines.fabric,segmentrouting,lldpprovider,hostprovider,proxyarp,openflow,odtn-service,optical-rest,roadm
+
+    tapi:
+      kind: linux
+      image: tapi-cpqd:latest
+      mgmt_ipv4: 172.10.10.11
+
+    ca1:
+      kind: linux
+      image: sdnm/systemd-cassini-sdnm:latest
+      mgmt_ipv4: 172.10.10.3
+      binds:
+        - ./config:/root/network_config:ro
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+        - /lib/modules:/lib/modules
+
+    ca2:
+      kind: linux
+      image: sdnm/systemd-cassini-sdnm:latest
+      mgmt_ipv4: 172.10.10.4
+      binds:
+        - ./config:/root/network_config:ro
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+        - /lib/modules:/lib/modules
+
+
+    h1:
+      kind: linux
+      image: sdnm/systemd-simplehost:latest
+      mgmt_ipv4: 172.10.10.9
+      binds:
+        - ./config:/root/network_config:ro
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+    h2:
+      kind: linux
+      image: sdnm/systemd-simplehost:latest
+      mgmt_ipv4: 172.10.10.10
+      binds:
+        - ./config:/root/network_config:ro
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  
+  links:
+    - endpoints: ["ca1:ca1-ovif1", "ca2:ca2-ovif1"]
+    - endpoints: ["ca1:ca1-vif1", "h1:ht1-ht1"]
+    - endpoints: ["ca2:ca2-vif1", "h2:ht2-ht1"]

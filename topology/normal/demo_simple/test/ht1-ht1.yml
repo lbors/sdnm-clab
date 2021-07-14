@@ -1,0 +1,9 @@
+interfaces:
+- name: eth0
+  type: veth
+  state: up
+  ipv4:
+    enabled: false
+    address:
+    - ip: 10.0.1.1
+      prefix-length: 24

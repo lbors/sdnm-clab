@@ -1,0 +1,12 @@
+[Unit]
+Description= Start Cassini-OVS
+#After= network.target ssh.service ovs-vswitchd.service ovsdb-server.service openvswitch-switch.service
+
+[Service]
+Environment=PYTHONPATH=/root/cassini-dataplane/
+WorkingDirectory=/root
+ExecStart=/bin/bash init-service.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
