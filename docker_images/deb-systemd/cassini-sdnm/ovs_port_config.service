@@ -1,0 +1,12 @@
+[Unit]
+Description= Start Cassini-OVS
+After= cassini.service
+
+[Service]
+#Environment=PYTHONPATH=/root/cassini-dataplane/
+WorkingDirectory=/root/network_config/
+ExecStart=/bin/bash python3 config_ports.py $HOSTNAME.y*
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

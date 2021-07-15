@@ -2,8 +2,8 @@ FROM sdnm/systemd-cassini-odtn:latest
 
 WORKDIR /root
 
-COPY init-service.sh .
-COPY cassini.service /lib/systemd/system/
+COPY init-service.sh config_ports.py .
+COPY cassini.service ovs_port_config.service /lib/systemd/system/
 
 LABEL br.rnp.label.name="cassini-sdnm"\
       br.rnp.label.description="SDN transponder cassini from ODTN with dataplane by RNP"\
@@ -19,9 +19,11 @@ RUN git clone https://github.com/fernnf/cassini-dataplane.git
 
 RUN  chmod +x /root/init-service.sh
 
+RUN  ln -sf /lib/systemd/system/openvswitch-switch.service /etc/systemd/system/multi-user.target.wants/openvswitch.service
+
 RUN  ln -sf /lib/systemd/system/cassini.service  /etc/systemd/system/multi-user.target.wants/cassini.service
 
-RUN  ln -sf /lib/systemd/system/openvswitch-switch.service /etc/systemd/system/multi-user.target.wants/openvswitch.service
+RUN  ln -sf /lib/systemd/system/ovs_port_config.service /etc/systemd/system/multi-user.target.wants/ovs_port_config.service
 
 CMD ["/lib/systemd/systemd"]
 
