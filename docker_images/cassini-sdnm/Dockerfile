@@ -15,7 +15,7 @@ LABEL br.rnp.label.name="cassini-sdnm"\
 
 RUN git clone https://github.com/fernnf/cassini-dataplane.git
 
-COPY main.py /root/cassini-dataplane/sdnm_cassini/.
+COPY dataplane.py /root/cassini-dataplane/sdnm_cassini/.
 
 ENV PYTHONPATH /root/cassini-dataplane/
 
