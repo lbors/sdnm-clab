@@ -56,30 +56,30 @@ function main () {
   /usr/share/openvswitch/scripts/ovs-ctl --system-id=random --system-type="emulation" start
 
   sleep 5
-  python3 /root/cassini-dataplane/sdnm_cassini/main.py &
+  python3 /root/cassini-dataplane/sdnm_cassini/main.py
 
-  sleep 5
-  config_ports
+#  sleep 5
+#  config_ports
 }
 
-function config_ports(){
-
-#  python3 /root/config_ports.py /root/network_config/$HOSTNAME.y*
-
-#  num=$(sed '/:/!d;s/:.*//;s/^ *//' /proc/net/dev | grep ovif | wc -l)
-#  python3 /root/inter_config.py ${num}
-
-  op=$(sed '/:/!d;s/:.*//;s/^ *//' /proc/net/dev | grep ovif | wc -l)
-  for ((i=1; i<=${op}; i++)); do
-    ovs-vsctl add-port oe${i} ovif${i}
-    ovs-vsctl add-port xe${i} vif${i}
-  done
-  echo "Conclude"
+#function config_ports(){
+#
+##  python3 /root/config_ports.py /root/network_config/$HOSTNAME.y*
+#
+##  num=$(sed '/:/!d;s/:.*//;s/^ *//' /proc/net/dev | grep ovif | wc -l)
+##  python3 /root/inter_config.py ${num}
+#
+#  op=$(sed '/:/!d;s/:.*//;s/^ *//' /proc/net/dev | grep ovif | wc -l)
+#  for ((i=1; i<=${op}; i++)); do
+#    ovs-vsctl add-port oe${i} ovif${i}
+#    ovs-vsctl add-port xe${i} vif${i}
+#  done
+#  echo "Conclude"
 #
 #  el=$(sed '/:/!d;s/:.*//;s/^ *//' /proc/net/dev | grep vif | wc -l)
 #  for ((i=1; i<=${el}; i++)); do
 #    ovs-vsctl add-port xe${i} vif${i}
 #  done
-}
+#}
 
 main
