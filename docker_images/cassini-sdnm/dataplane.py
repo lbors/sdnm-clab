@@ -130,12 +130,12 @@ class CassiniDataPlane(object):
         return sr.SR_ERR_OK
 
     def count(self):
-        inter = os.listdir('/sys/class/net/')
+        interfaces = os.listdir('/sys/class/net/')
         opt, eth = 0, 0
-        for i in inter:
-            if i == 'vif':
+        for i in interfaces:
+            if i[:-1] == 'ovif':
                 opt += 1
-            if i == 'ovif':
+            if i[:-1] == 'vif':
                 eth += 1
         self.add_port(opt, eth)
 

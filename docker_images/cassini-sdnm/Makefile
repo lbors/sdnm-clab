@@ -20,10 +20,6 @@ builder: ## Build SDNML cassini image
 	@echo 'Building SDNML cassini image' \
 	&& $(DOCKER) build -t $(GROUP)/$(PROJECT):$(VERSION) -f Dockerfile .
 
-builder_systemd: ## Build SDNML cassini image
-	@echo 'Building SDNML cassini image' \
-	&& $(DOCKER) build -t $(GROUP)/$(PROJECT):$(VERSION) -f Dockerfile.systemd .
-
 run: ## RUN SDNML cassini container
 	@echo 'Running SDNML cassini container' \
 	&& $(DOCKER) run -itd  --privileged --name $(NAME) \
