@@ -29,7 +29,7 @@ function create_interfaces() {
 }
 
 function config_ports(){
-  sleep 5
+  sleep 10
 #  python /root/config_ports.py /root/network_config/$HOSTNAME.y*
   num=$(sed '/:/!d;s/:.*//;s/^ *//' /proc/net/dev | grep vif | wc -l)
   for ((i=1; i<=${num}; i++)); do
