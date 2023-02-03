@@ -13,9 +13,9 @@
 #  See the License for the specific language governing permissions and         +
 #  limitations under the License.                                              +
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import random
 import traceback
 import sysrepo as sr
-import subprocess
 import os
 from sdnm_cassini import init_logger as log
 from sdnm_cassini import ovsctl
@@ -230,6 +230,7 @@ class CassiniDataPlane(object):
         except Exception as ex:
             self.logger.error(ex)
 
+
     def add_logical_interfaces(self):
         self.logger.info("Creating logical interfaces")
         interfaces = td.get_index_interfaces(self.sess)
@@ -258,8 +259,12 @@ class CassiniDataPlane(object):
             if br is not None:
                 ovsctl.add_port_patch(br, desc, i, peer="none")
                 freq, vlan = pl.get_config_frequency_vlan(self.sess, desc)
-                self.logger.info("Mapping vlan {} as frequency {}Ghz on port {}".format(vlan, freq, desc))
-                ovsctl.set_vlan_port(desc, vlan)
+                if freq.__eq__("0"):
+                    v = random.randint(1, 4096)
+                    ovsctl.set_vlan_port(desc, v)
+                else:
+                    self.logger.info("Mapping vlan {} as frequency {}Ghz on port {}".format(vlan, freq, desc))
+                    ovsctl.set_vlan_port(desc, vlan)
                 self.logger.info("{} {} was created".format(type, desc))
             else:
                 raise RuntimeError("Transceiver not was found")
@@ -305,7 +310,8 @@ class CassiniDataPlane(object):
 
             # disable
             elif not o[0].__eq__("0") and n[0].__eq__("0"):
-                ovsctl.rem_vlan_port(o[1], o[2])
+                v = random.randint(1, 4096)
+                ovsctl.set_vlan_port(o[1], v)
                 self.logger.info("optical frequency {}GHZ was disabled on port {}".format(o[0], o[1]))
 
             # enable
@@ -374,3 +380,5 @@ class CassiniDataPlane(object):
 
         except Exception as ex:
             traceback.print_exc()
+
+
