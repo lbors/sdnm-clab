@@ -16,6 +16,7 @@
 import random
 import traceback
 import sysrepo as sr
+import subprocess
 import os
 from sdnm_cassini import init_logger as log
 from sdnm_cassini import ovsctl
